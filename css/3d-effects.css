@@ -1,0 +1,135 @@
+/* ==========================================================================
+   3D EFFECTS, PERSPECTIVE TRANSFORMS & LIGHTING REFLECTIONS
+   ========================================================================== */
+
+/* 3D Perspective Containers */
+.hero-visual-wrapper,
+.stacked-cards-stage,
+.discover-grid,
+.pillars-grid {
+  perspective: 1200px;
+}
+
+/* 3D Tilt Card Base with Dynamic Cursor Glare */
+.card-3d-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+}
+
+.card-3d-tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 260px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 80%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 5;
+}
+
+.card-3d-tilt:hover::after {
+  opacity: 1;
+}
+
+/* Subtle 3D Depth Layering on Card Internals */
+.card-3d-tilt .card-inner,
+.card-3d-tilt .pillar-icon-box,
+.card-3d-tilt .metric-value {
+  transform: translateZ(18px);
+}
+
+.card-3d-tilt .clean-icon-pill,
+.card-3d-tilt .pillar-title {
+  transform: translateZ(24px);
+}
+
+/* Floating Metric Badges Floating Physics */
+.metric-card-top {
+  animation: floatBadgeTop 6s ease-in-out infinite;
+}
+
+.metric-card-bottom {
+  animation: floatBadgeBottom 7s ease-in-out infinite 0.8s;
+}
+
+@keyframes floatBadgeTop {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.8deg);
+  }
+}
+
+@keyframes floatBadgeBottom {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(7px) rotate(-0.8deg);
+  }
+}
+
+/* 3D Stacked Cards Idle Hover */
+.legacy-card-stack:hover .stack-card-back {
+  transform: translate(-26px, 18px) rotate(-9deg);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.legacy-card-stack:hover .stack-card-middle {
+  transform: translate(-14px, 10px) rotate(-5deg);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.legacy-card-stack:hover .stack-card-front {
+  transform: translate(2px, -4px) rotate(1deg);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Gold Foil Shimmer Animation */
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: goldShimmerMove 4.5s infinite;
+}
+
+@keyframes goldShimmerMove {
+  0%, 65% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* 3D Glassmorphism Panel */
+.glassmorphic-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 16px 36px rgba(18, 67, 45, 0.08);
+}
